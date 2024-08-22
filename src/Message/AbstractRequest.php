@@ -100,6 +100,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['Brq_returnreject'] = $this->getRejectUrl();
         $data['Brq_returnerror'] = $this->getErrorUrl();
         $data['Brq_culture'] = $this->getCulture();
+        $data['Brq_push'] = $this->getNotifyUrl();
+        $data['Brq_pushfailure'] = $this->getNotifyUrl();
 
         return $data;
     }
@@ -113,10 +115,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             if (strcasecmp($key, 'Brq_signature') === 0) {
                 continue;
             }
-            $str .= $key.'='.urldecode($value);
+            $str .= $key . '=' . urldecode($value);
         }
 
-        return sha1($str.$this->getSecretKey());
+        return sha1($str . $this->getSecretKey());
     }
 
     public function sendData($data)
